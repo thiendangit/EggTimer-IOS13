@@ -1,18 +1,38 @@
 
 
 import UIKit
+import AVFoundation
+
 
 class ViewController: UIViewController {
     
+    
+    @IBOutlet weak var progressBar: UIProgressView!
+    var bombSoundEffect = AVAudioPlayer()
     let arrayEggTypes : [String : Int] = [
-        "Soft" : 3,
-        "Medium" : 5,
-        "Hard" : 7
+        "Soft" : 5,
+        "Medium" :7 ,
+        "Hard" : 10
     ]
     
-    var timingRemaining : Int = 60;
+    var currentTime : Float = 0.0;
+    let totalTime  : Float = 10.0
+    var timingRemaining : Int = 0;
+    var step : Float = 1.0
+    
+    func playSound(forResource : String) -> Void {
+        let path = Bundle.main.path(forResource: forResource, ofType:"mp3")!
+        let url = URL(fileURLWithPath: path)
+        do {
+            bombSoundEffect = try AVAudioPlayer(contentsOf: url)
+            bombSoundEffect.play()
+        } catch {
+            print("can't play file!")
+        }
+    }
     
     @IBAction func onPressEggs(_ sender: UIButton) {
+        currentTime = 0.0;
         let eggType = sender.currentTitle!
         print("\(arrayEggTypes[eggType] ?? 0)")
         timingRemaining = arrayEggTypes[eggType] ?? 60
@@ -22,21 +42,27 @@ class ViewController: UIViewController {
     }
     
     func timer() -> Void {
-        Timer().invalidate()
-        _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.update), userInfo: nil, repeats: true)
     }
     
-    @objc func update() {
-        if(timingRemaining > 0){
-            timingRemaining -= 1
-            print("timingRemaining : \(timingRemaining)")
+    @objc func update(timer: Timer) {
+        if(timingRemaining > 0 && Int(currentTime) < timingRemaining){
+            currentTime += step;
+            progressBar.progress = Float(currentTime / totalTime)
+            print("currentTime : \(Float(currentTime / totalTime))")
         }else{
-            Timer().invalidate()
+            timer.invalidate()
+            print("Done")
+            playSound(forResource: "alarm_sound")
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        progressBar.layer.cornerRadius = 20
+        progressBar.clipsToBounds = true
+        progressBar.layer.sublayers![1].cornerRadius = 20
+        progressBar.subviews[1].clipsToBounds = true
     }
-
+    
 }

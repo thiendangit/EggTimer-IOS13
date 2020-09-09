@@ -121,6 +121,22 @@
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJN-th-c5K" userLabel="Timer View">
                                         <rect key="frame" x="0.0" y="346" width="288" height="134"/>
+                                        <subviews>
+                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progressViewStyle="bar" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fda-dB-dnU">
+                                                <rect key="frame" x="22" y="30" width="244" height="3"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="2" id="vyJ-Rp-AMp"/>
+                                                </constraints>
+                                                <color key="progressTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="trackTintColor" systemColor="systemGray4Color" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="fda-dB-dnU" secondAttribute="bottom" constant="120.33" id="CuI-df-qgn"/>
+                                            <constraint firstAttribute="trailing" secondItem="fda-dB-dnU" secondAttribute="trailing" constant="22" id="D0g-zu-nGO"/>
+                                            <constraint firstItem="fda-dB-dnU" firstAttribute="leading" secondItem="nJN-th-c5K" secondAttribute="leading" constant="22" id="Jum-YK-NLK"/>
+                                            <constraint firstItem="fda-dB-dnU" firstAttribute="top" secondItem="nJN-th-c5K" secondAttribute="top" constant="30" id="UtB-IO-AYB"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                             </stackView>
@@ -134,10 +150,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="progressBar" destination="fda-dB-dnU" id="4xx-nv-FtH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
+            <point key="canvasLocation" x="136.875" y="136.25"/>
         </scene>
     </scenes>
     <resources>
